@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fetch Categories</title>
+</head>
+<style type="text/css">
+	button{
+		padding: 10px 20px;
+		border-radius: 12px;
+		font-family: verdana;
+		background-color: white;
+  		color: black;
+  		border: 2px solid #4CAF50
+	}
+
+	h2{
+		font-size: 2em;
+		font-family: verdana;
+		text-align: center;
+		color: grey;
+	}
+	li{
+		font-size: 1em;
+		font-family: verdana;
+		color: grey;
+		list-style: none;
+	}
+	img{
+		width: 50%;
+	}
+
+</style>
+<body>
+	<button id="categories">Get All Categories</button>
+	<div id="output"></div>
+<script type="text/javascript">
+	document.getElementById('categories').addEventListener('click' , getCategories);
+
+	function getCategories(){
+		fetch('http://46.101.146.101:8081/categories/')
+		.then((res) => res.json())
+		.then((data) => {
+			let output = '<h2>Categories</h2>';
+			Array.from(data).forEach(function(categ){
+				output += `
+				<ul>
+					<li>ID: ${categ.id}</li>
+					<li>Title: ${categ.title}</li>
+					<img src=${categ.category_image_url}>
+				</ul>
+				`;
+			});
+			document.getElementById('output').innerHTML = output;
+		})
+	}
+
+</script>
+</body>
+</html>
